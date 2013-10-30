@@ -13,7 +13,8 @@ shinyUI(pageWithSidebar(
           selectInput("plot.type","Plot Type:", 
                       list(boxplot = "boxplot", histogram = "histogram", density = "density", bar = "bar")
           ),
-          checkboxInput("show.points", "show points", TRUE)
+          checkboxInput("show.points", "show points", TRUE),
+          tags$textarea(id="foo", rows=3, cols=40, "Default value")
      ),	
      
      # output				
