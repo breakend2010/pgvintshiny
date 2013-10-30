@@ -2,13 +2,13 @@
 shinyServer(function(input, output, session){
      #update variable and group based on dataset
      observe({
-          if (is.null(input$dataset))
-               return()
+          #if (is.null(input$dataset))
+          #     return()
 
           objects <- sapply(sapply(ls(), get), is.data.frame)
           df.opts <- names(objects[objects])          
           
-          obj<-switch(input$dataset, df.opts)
+          #obj<-switch(input$dataset, df.opts)
           updateSelectInput(session, "dataset", choices = df.opts)
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
