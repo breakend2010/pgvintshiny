@@ -4,13 +4,15 @@ shinyServer(function(input, output, session){
      observe({
           if (is.null(input$dataset))
                return()
-          obj<-switch(input$dataset,
-                      "iris" = iris,
-                      "mtcars" = mtcars,
-                      "VintageData" = VintageData)	 
+#          obj<-switch(input$dataset,
+#                      "iris" = iris,
+#                      "mtcars" = mtcars,
+#                      "VintageData" = VintageData)	 
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
+          updateSelectInput(session, "group", choices = var.opts)          
+          
      })
      
      output$caption<-renderText({
@@ -29,16 +31,7 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           
-          #xaxis <- get(input$dataset)[[input$xaxis]]
-          #yaxis <- get(input$dataset)[[input$yaxis]]
-          #if (is.null(xaxis) || is.null(yaxis))
-          #     return(NULL)
-          
-          plot.obj<<-list() # not sure why input$X can not be used directly?
-          plot.obj$data<<-get(input$dataset) 
-          plot.obj$xaxis<<-with(plot.obj$data,get(input$xaxis)) 
-          plot.obj$yaxis<<-with(plot.obj$data,get(input$yaxis)) 
-          
+     
           #dynamic plotting options
           plot.type<-switch(input$plot.type,
                             "boxplot" 	= 	geom_boxplot(),
@@ -50,7 +43,7 @@ shinyServer(function(input, output, session){
           require(ggplot2)
 
           cat(plot.obj$axis,'\n')
-          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$xaxis, cond="product",facets="~region")
+          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets="~region")
           print(p)
      })	
 })

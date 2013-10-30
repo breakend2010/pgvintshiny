@@ -5,13 +5,14 @@ shinyUI(pageWithSidebar(
      #input
      sidebarPanel
      (
-          selectInput("dataset","Data:", 
-                      list(iris = "iris", mtcars = "mtcars", VintageData = "VintageData")
-          ),
+          #selectInput("dataset","Data:", 
+          #            list(iris = "iris", mtcars = "mtcars", VintageData = "VintageData")
+          #),
 #          selectInput("variable","Variable:", "Loading..."),
 #          selectInput("group","Group:", "Loading...",multiple=TRUE),
            selectInput("xaxis","X Axis:", "Loading..."),
            selectInput("yaxis","Y Axis:", "Loading..."),
+           selectInput("group","Group:" , "Loading..."),
           
           selectInput("plot.type","Plot Type:", 
                       list(boxplot = "boxplot", histogram = "histogram", density = "density", bar = "bar")
