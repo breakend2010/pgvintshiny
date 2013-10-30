@@ -2,8 +2,8 @@
 shinyServer(function(input, output, session){
      #update variable and group based on dataset
      observe({
-          #if (is.null(input$dataset))
-          #     return()
+          if (is.null(input$dataset))
+               return()
 
           objects <- as.vector(sapply(sapply(ls(), get), is.data.frame))
           df.opts <- names(objects[unlist(objects)])          
