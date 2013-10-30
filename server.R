@@ -5,15 +5,15 @@ shinyServer(function(input, output, session){
           if (is.null(input$dataset))
                return()
 
-     
-#           obj<-switch(input$dataset,
-#                       "iris" = iris,
-#                       "mtcars" = mtcars,
-#                       "VintageData" = VintageData)
           objects <- sapply(sapply(ls(), get), is.data.frame)
-          cat("Objects ->", objects,"\n")
           var.obj<-switch(namel(names(objects[objects])))
-          updateSelectInput(session, "dataframes", choices = var.obj)
+          
+          obj<-switch(input$dataset,var.obj)
+          
+#          objects <- sapply(sapply(ls(), get), is.data.frame)
+#          cat("Objects ->", objects,"\n")
+#          var.obj<-switch(namel(names(objects[objects])))
+#          updateSelectInput(session, "dataframes", choices = var.obj)
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
