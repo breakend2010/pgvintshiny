@@ -29,18 +29,7 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           
-     
-          #dynamic plotting options
-          plot.type<-switch(input$plot.type,
-                            "boxplot" 	= 	geom_boxplot(),
-                            "histogram" =	geom_histogram(alpha=0.5,position="identity"),
-                            "density" 	=	geom_density(alpha=.75),
-                            "bar" 		=	geom_bar(position="dodge")
-          )
-          
           require(ggplot2)
-
-          cat(plot.obj$axis,'\n')
           p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets=input$facets)
           print(p)
      })	

@@ -9,7 +9,7 @@ shinyUI(pageWithSidebar(
           selectInput("xaxis","X Axis:", "Loading..."),
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
-          tags$textarea(id="facets", rows=1, cols=40, "Default value")          
+          tags$textarea(id="facets", rows=3, cols=40, "Default value")          
      ),	
      
      # output				
