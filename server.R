@@ -6,7 +6,7 @@ shinyServer(function(input, output, session){
                return()
 
           objects <- sapply(sapply(ls(), get), is.data.frame)
-          var.obj<-switch(namel(names(objects[objects])))
+          var.obj<-namel(names(objects[objects]))
           
           obj<-switch(input$dataset,var.obj)
           
