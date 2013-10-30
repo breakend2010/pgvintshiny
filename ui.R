@@ -9,7 +9,7 @@ shinyUI(pageWithSidebar(
                       list(iris = "iris", mtcars = "mtcars", VintageData = "VintageData")
           ),
           selectInput("variable","Variable:", "Loading..."),
-          selectInput("group","Group:", "Loading..."),
+          selectInput("group","Group:", "Loading...",multiple=TRUE),
           selectInput("plot.type","Plot Type:", 
                       list(boxplot = "boxplot", histogram = "histogram", density = "density", bar = "bar")
           ),
