@@ -8,7 +8,7 @@ shinyUI(pageWithSidebar(
            selectInput("dataset","Data:", "Loading..." ),
 #          selectInput("variable","Variable:", "Loading..."),
 #          selectInput("group","Group:", "Loading...",multiple=TRUE),
-           selectInput("dataframes","Data Frames:", "Loading..."),
+#          selectInput("dataframes","Data Frames:", "Loading..."),
            selectInput("xaxis","X Axis:", "Loading..."),
            selectInput("yaxis","Y Axis:", "Loading..."),
            selectInput("group","Group:" , "Loading..."),

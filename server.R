@@ -8,7 +8,8 @@ shinyServer(function(input, output, session){
           objects <- as.vector(sapply(sapply(ls(), get), is.data.frame))
           df.opts <- names(objects[unlist(objects)])          
           
-          #obj<-switch(input$dataset, df.opts)
+          obj<-switch(input$dataset, df.opts)
+          var.opts<-namel(colnames(obj))
           updateSelectInput(session, "dataset", choices = df.opts)
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
