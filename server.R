@@ -4,10 +4,10 @@ shinyServer(function(input, output, session){
      observe({
           if (is.null(input$dataset))
                return()
-#          obj<-switch(input$dataset,
-#                      "iris" = iris,
-#                      "mtcars" = mtcars,
-#                      "VintageData" = VintageData)	 
+          obj<-switch(input$dataset,
+                      "iris" = iris,
+                      "mtcars" = mtcars,
+                      "VintageData" = VintageData)	 
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
