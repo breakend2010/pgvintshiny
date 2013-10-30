@@ -41,7 +41,7 @@ shinyServer(function(input, output, session){
           require(ggplot2)
 
           cat(plot.obj$axis,'\n')
-          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets="~region")
+          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets=input$facets")
           print(p)
      })	
 })
