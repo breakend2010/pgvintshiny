@@ -5,7 +5,7 @@ shinyServer(function(input, output, session){
           #if (is.null(input$dataset))
           #     return()
 
-          objects <- sapply(sapply(ls(), get), is.data.frame)
+          objects <- as.vector(sapply(sapply(ls(), get), is.data.frame))
           df.opts <- names(objects[objects])          
           
           #obj<-switch(input$dataset, df.opts)
