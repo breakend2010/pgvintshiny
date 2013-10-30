@@ -32,7 +32,7 @@ shinyServer(function(input, output, session){
           #xaxis <- get(input$dataset)[[input$xaxis]]
           #yaxis <- get(input$dataset)[[input$yaxis]]
           #if (is.null(xaxis) || is.null(yaxis))
-               return(NULL)
+          #     return(NULL)
           
           plot.obj<<-list() # not sure why input$X can not be used directly?
           plot.obj$data<<-get(input$dataset) 
