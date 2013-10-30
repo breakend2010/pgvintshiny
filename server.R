@@ -87,7 +87,7 @@ shinyServer(function(input, output, session){
 #           )  +
 #                .theme
 #           print(p)
-          p <- PlotVintageData(VintageData,cond="product",facets="region")
+          p <- PlotVintageData(VintageData,cond="product",facets="~region")
           print(p)
      })	
 })
