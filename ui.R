@@ -6,7 +6,7 @@ shinyUI(pageWithSidebar(
      sidebarPanel
      (
           selectInput("dataset","Data:", 
-                      list(iris = "iris", mtcars = "mtcars")
+                      list(iris = "iris", mtcars = "mtcars", VintageData = "VintageData")
           ),
           selectInput("variable","Variable:", "Loading..."),
           selectInput("group","Group:", "Loading..."),
