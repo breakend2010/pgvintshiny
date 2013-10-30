@@ -6,7 +6,8 @@ shinyServer(function(input, output, session){
                return()
           obj<-switch(input$dataset,
                       "iris" = iris,
-                      "mtcars" = mtcars)	 
+                      "mtcars" = mtcars,
+                      "VintageData" = VintageData)	 
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "variable", choices = var.opts)
           updateSelectInput(session, "group", choices = var.opts)
