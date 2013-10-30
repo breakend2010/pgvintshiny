@@ -6,7 +6,7 @@ shinyServer(function(input, output, session){
           #     return()
 
           objects <- as.vector(sapply(sapply(ls(), get), is.data.frame))
-          df.opts <- names(objects[objects])          
+          df.opts <- names(objects[unlist(objects)])          
           
           #obj<-switch(input$dataset, df.opts)
           updateSelectInput(session, "dataset", choices = df.opts)
