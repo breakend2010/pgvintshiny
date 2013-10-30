@@ -88,7 +88,7 @@ shinyServer(function(input, output, session){
 #                .theme
 #           print(p)
           cat(plot.obj$axis,'\n')
-          p <- PlotVintageData(VintageData,x=plot.obj$xaxis, y=plot.obj$yaxis, cond="product",facets="~region")
+          p <- PlotVintageData(VintageData,x=xaxis, y=yaxis, cond="product",facets="~region")
           print(p)
      })	
 })
