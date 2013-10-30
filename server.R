@@ -9,8 +9,8 @@ shinyServer(function(input, output, session){
                       "mtcars" = mtcars,
                       "VintageData" = VintageData)	 
           var.opts<-namel(colnames(obj))
-          updateSelectInput(session, "variable", choices = var.opts)
-          updateSelectInput(session, "group", choices = var.opts)
+          updateSelectInput(session, "xaxis", choices = var.opts)
+          updateSelectInput(session, "yaxis", choices = var.opts)
      })
      
      output$caption<-renderText({
@@ -29,15 +29,15 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           
-          variable <- get(input$dataset)[[input$variable]]
-          group <- get(input$dataset)[[input$group]]
-          if (is.null(variable) || is.null(group))
+          xaxis <- get(input$dataset)[[input$xaxis]]
+          yaxis <- get(input$dataset)[[input$yaxis]]
+          if (is.null(xaxis) || is.null(yaxis))
                return(NULL)
           
           plot.obj<<-list() # not sure why input$X can not be used directly?
           plot.obj$data<<-get(input$dataset) 
-          plot.obj$variable<<-with(plot.obj$data,get(input$variable)) 
-          plot.obj$group<<-with(plot.obj$data,get(input$group)) 
+          plot.obj$variable<<-with(plot.obj$data,get(input$xaxis)) 
+          plot.obj$group<<-with(plot.obj$data,get(input$yaxis)) 
           
           #dynamic plotting options
           plot.type<-switch(input$plot.type,
@@ -87,7 +87,7 @@ shinyServer(function(input, output, session){
 #           )  +
 #                .theme
 #           print(p)
-          p <- PlotVintageData(VintageData,cond="product",facets="~region")
+          p <- PlotVintageData(VintageData,x=plot.obj$xaxis, y=plot.obj$yaxis, cond="product",facets="~region")
           print(p)
      })	
 })
