@@ -6,7 +6,7 @@ shinyServer(function(input, output, session){
                return()
 
           objects <- as.vector(sapply(sapply(ls(), get), is.data.frame))
-          df.opts <- names(objects[unlist(objects)])          
+          df.opts <- namel(names(objects[unlist(objects)]))
           
           obj<-switch(input$dataset, df.opts)
           var.opts<-namel(colnames(obj))
