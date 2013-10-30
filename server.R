@@ -13,15 +13,6 @@ shinyServer(function(input, output, session){
           
      })
      
-     output$caption<-renderText({
-          switch(input$plot.type,
-                 "boxplot" 	= 	"Boxplot",
-                 "histogram" =	"Histogram",
-                 "density" 	=	"Density plot",
-                 "bar" 		=	"Bar graph")
-     })
-     
-     
      output$plot <- renderUI({
           plotOutput("p")
      })
