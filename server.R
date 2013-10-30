@@ -36,8 +36,8 @@ shinyServer(function(input, output, session){
           
           plot.obj<<-list() # not sure why input$X can not be used directly?
           plot.obj$data<<-get(input$dataset) 
-          plot.obj$variable<<-with(plot.obj$data,get(input$xaxis)) 
-          plot.obj$group<<-with(plot.obj$data,get(input$yaxis)) 
+          plot.obj$xaxis<<-with(plot.obj$data,get(input$xaxis)) 
+          plot.obj$yaxis<<-with(plot.obj$data,get(input$yaxis)) 
           
           #dynamic plotting options
           plot.type<-switch(input$plot.type,
