@@ -6,15 +6,10 @@ shinyServer(function(input, output, session){
                return()
 
           objects <- sapply(sapply(ls(), get), is.data.frame)
-          var.obj<-namel(names(objects[objects]))
+          df.opts <- names(objects[objects])          
           
-          obj<-switch(input$dataset,var.obj)
-          
-#          objects <- sapply(sapply(ls(), get), is.data.frame)
-#          cat("Objects ->", objects,"\n")
-#          var.obj<-switch(namel(names(objects[objects])))
-#          updateSelectInput(session, "dataframes", choices = var.obj)
-          var.opts<-namel(colnames(obj))
+          obj<-switch(input$dataset, df.opts)
+          updateSelectInput(session, "dataset", choices = df.opts)
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
           updateSelectInput(session, "group", choices = var.opts)          
