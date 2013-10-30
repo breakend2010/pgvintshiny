@@ -29,9 +29,9 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           
-          xaxis <- get(input$dataset)[[input$xaxis]]
-          yaxis <- get(input$dataset)[[input$yaxis]]
-          if (is.null(xaxis) || is.null(yaxis))
+          #xaxis <- get(input$dataset)[[input$xaxis]]
+          #yaxis <- get(input$dataset)[[input$yaxis]]
+          #if (is.null(xaxis) || is.null(yaxis))
                return(NULL)
           
           plot.obj<<-list() # not sure why input$X can not be used directly?
@@ -48,47 +48,9 @@ shinyServer(function(input, output, session){
           )
           
           require(ggplot2)
-#           #plotting theme
-#           .theme<- theme(
-#                axis.line = element_line(colour = 'gray', size = .75), 
-#                panel.background = element_blank(),  
-#                plot.background = element_blank()
-#           )	 
-#           if(input$plot.type=="boxplot")	{		#control for 1D or 2D graphs 
-#                p<-ggplot(plot.obj$data, 
-#                          aes(
-#                               x 		= plot.obj$group, 
-#                               y 		= plot.obj$variable,
-#                               fill 	= as.factor(plot.obj$group)
-#                          )
-#                ) + plot.type
-#                
-#                if(input$show.points==TRUE)
-#                { 
-#                     p<-p+ geom_point(color='black',alpha=0.5, position = 'jitter')
-#                }
-#                
-#           } else {
-#                
-#                p<-ggplot(plot.obj$data, 
-#                          aes(
-#                               x 		= plot.obj$variable,
-#                               fill 	= as.factor(plot.obj$group),
-#                               group 	= as.factor(plot.obj$group),
-#                               #color 	= as.factor(plot.obj$group)
-#                          )
-#                ) + plot.type
-#           }
-#           
-#           p<-p+labs(
-#                fill 	= input$group,
-#                x 		= "",
-#                y 		= input$variable
-#           )  +
-#                .theme
-#           print(p)
+
           cat(plot.obj$axis,'\n')
-          p <- PlotVintageData(VintageData,x=xaxis, y=yaxis, cond="product",facets="~region")
+          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$xaxis, cond="product",facets="~region")
           print(p)
      })	
 })
