@@ -11,6 +11,7 @@ shinyServer(function(input, output, session){
 #                       "mtcars" = mtcars,
 #                       "VintageData" = VintageData)
           objects <- sapply(sapply(ls(), get), is.data.frame)
+          cat("Objects ->", objects,"\n")
           var.obj<-switch(namel(names(objects[objects])))
           updateSelectInput(session, "dataframes", choices = var.obj)
           var.opts<-namel(colnames(obj))
