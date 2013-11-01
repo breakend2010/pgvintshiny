@@ -5,7 +5,7 @@ shinyUI(pageWithSidebar(
      #input
      sidebarPanel
      (
-          selectInput("dataset","Data:", list(VintageData = "VintageData")),
+          #selectInput("dataset","Data:", list(VintageData = "VintageData")),
           selectInput("xaxis","X Axis:", "Loading..."),
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
