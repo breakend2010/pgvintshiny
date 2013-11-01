@@ -21,7 +21,7 @@ shinyServer(function(input, output, session){
                                                            "event_weight_csum_pct")]
           var.none <- 'None'
           names(var.none) <- 'None'
-          updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers,selected= var.opts.slicers)
+          updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers))
