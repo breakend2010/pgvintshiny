@@ -4,18 +4,16 @@ shinyServer(function(input, output, session){
      observe({
           #obj<-VintageData
           require(pgvint)
-          #require(sqldf)
-          obj<-AggregateVintageData(VintageData,Slicers=c("region","product"))
-          #obj<-switch(input$dataset, "VintageData" = VintageData)
+          cat(input$source_)
+          obj<-AggregateVintageData(VintageData,Slicers=c("product"))
+
           var.opts<-namel(colnames(obj))
-          
-          names(var.opts)[names(var.opts) %in% c("vintage_unit_weight","vintage_unit_count",
-                                                  "event_weight","event_weight_pct","event_weight_csum",
-                                                  "event_weight_csum_pct","rn")] <- c ('Vintage unit weight', 'Vintage unit count',
-                                                                                        'Event weight','Event weight pct',
-                                                                                        'Event weight csum', 'Event weight csum pct',
-                                                                                        'Row number')
+          var.opts.original.slicers <- namel(colnames(VintageData))
+
           var.opts.slicers <- var.opts[!(var.opts %in% c("vintage_unit_weight","vintage_unit_count",
+                                                         "event_weight","event_weight_pct","event_weight_csum",
+                                                         "event_weight_csum_pct","rn"))]
+          var.opts.original.slicers <- var.opts[!(var.opts %in% c("vintage_unit_weight","vintage_unit_count",
                                                          "event_weight","event_weight_pct","event_weight_csum",
                                                          "event_weight_csum_pct","rn"))]
           var.opts.measures <- var.opts[var.opts %in% c("vintage_unit_weight","vintage_unit_count",
@@ -23,7 +21,7 @@ shinyServer(function(input, output, session){
                                                            "event_weight_csum_pct")]
           var.none <- 'None'
           names(var.none) <- 'None'
-          updateSelectInput(session, "source_slicers", choices = var.opts.slicers,selected= var.opts.slicers)
+          updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers,selected= var.opts.slicers)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers))
