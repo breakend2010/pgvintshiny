@@ -10,12 +10,12 @@ shinyUI(pageWithSidebar(
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
           selectInput("left_facets","Left-side formula facets:" , "Loading...",multiple=TRUE,),          
-          selectInput("right_facets","Left-side formula facets:" , "Loading...",multiple=TRUE)
+          selectInput("right_facets","Right-side formula facets:" , "Loading...",multiple=TRUE)
      ),	
      
      # output				
      mainPanel(
-          h3(textOutput("caption")),
+          h3('Vintage Analysis'),
           uiOutput("plot") # depends on input 
      )
 ))
