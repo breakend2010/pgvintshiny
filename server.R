@@ -5,7 +5,7 @@ shinyServer(function(input, output, session){
 
           require(pgvint)
           require(sqldf)
-          cat(input$source_slicers)
+
           if (is.null(input$source_slicers)) {
                obj <- VintageData
           } else {
@@ -41,12 +41,11 @@ shinyServer(function(input, output, session){
      output$p <- renderPlot({
           
           require(ggplot2)
+          obj <- AggregateVintageData(VintageData,Slicers=input$source_slicers)
           if (input$group == 'None') {
-               p <- PlotVintageData(AggregateVintageData(VintageData,Slicers=input$source_slicers)
-                                    ,x=input$xaxis, y=input$yaxis)     
+               p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis)     
           } else {
-               p <- PlotVintageData(AggregateVintageData(VintageData,Slicers=input$source_slicers)
-                                    ,x=input$xaxis,y=input$yaxis,cond=input$group)     
+               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group)     
           }
           
           print(p)
