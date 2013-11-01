@@ -4,7 +4,7 @@ shinyServer(function(input, output, session){
      observe({
           #obj<-VintageData
           require(sqldf)
-          obj<-AggregateVintageData(VintageData,Slicers="product")
+          obj<-AggregateVintageData(VintageData,Slicers=c("region","product"))
           #obj<-switch(input$dataset, "VintageData" = VintageData)
           var.opts<-namel(colnames(obj))
           
