@@ -27,7 +27,7 @@ This should result in:
 ![alt tag](http://www.analytikdat.cz/images/easyblog_images/923/20131020-get-vintage-data-postgresql-r/pgvintshiny-vintage-data-analysis-interactive-shiny-app.png)
 
 ### Usage
-By default, all Slicers available in VintageData (see `pgvint` documentation if you do not understand) will be used to produce meaningfull output.
+By default, all Slicers available in VintageData (see `pgvint` documentation if you do not understand what Slicer is) will be used to produce meaningfull output.
 First Slicer will be used as a group, others will be used for facetting. By default, distance is on X axis and event_weight_csum_pct on Y axis.
 
 If you select different combination of Source Slicers, than the underlying dataset is recalculated using `AggregateVintageData` function and new default view is displayed.
