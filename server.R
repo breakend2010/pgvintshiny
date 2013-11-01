@@ -4,6 +4,12 @@ shinyServer(function(input, output, session){
      observe({
           obj<- VintageData #switch(input$dataset, "VintageData" = VintageData)
           var.opts<-namel(colnames(obj))
+          names(var.opts)[names(var.opts) %in% c("vintage_unit_weight","vintage_unit_count",
+                                                  "event_weight","event_weight_pct","event_weight_csum",
+                                                  "event_weight_csum_pct","rn"))] <- c ('Vintage unit weight', 'Vintage unit count',
+                                                                                        'Event weight','Event weight pct',
+                                                                                        'Event weight csum', 'Event weight csum pct',
+                                                                                        'Row number')
           var.opts.slicers <- var.opts[!(var.opts %in% c("vintage_unit_weight","vintage_unit_count",
                                                          "event_weight","event_weight_pct","event_weight_csum",
                                                          "event_weight_csum_pct","rn"))]
