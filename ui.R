@@ -5,10 +5,10 @@ shinyUI(pageWithSidebar(
      #input
      sidebarPanel
      (
-          selectInput("xaxis","X Axis:", "Loading..."),
-          selectInput("yaxis","Y Axis:", "Loading..."),
+          selectInput("xaxis","X Axis:", "distance"),
+          selectInput("yaxis","Y Axis:", "event_weight_csum_pct"),
           selectInput("group","Group:" , "Loading..."),
-          selectInput("left_facets","Left-side formula facets:" , "Loading...",multiple=TRUE),          
+          selectInput("left_facets","Left-side formula facets:" , "Loading...",multiple=TRUE,),          
           selectInput("right_facets","Left-side formula facets:" , "Loading...",multiple=TRUE)
      ),	
      
