@@ -107,7 +107,7 @@ AggregateVintageData <- function(VintageData=NA,Slicers=NA,Type='include',TimeAg
           "
         sum(vintage_unit_weight) as vintage_unit_weight,
         sum(vintage_unit_count) as vintage_unit_count,
-        sum(event_weight) as vintage_event_weight,
+        sum(event_weight) as event_weight,
         sum(event_weight)/sum(vintage_unit_weight) as event_weight_pct ,
         sum(event_weight_csum) as event_weight_csum,
         sum(event_weight_csum)/sum(vintage_unit_weight) as event_weight_csum_pct 
@@ -119,7 +119,7 @@ AggregateVintageData <- function(VintageData=NA,Slicers=NA,Type='include',TimeAg
           if(!all(is.na(UsedSlicers))) paste(paste(UsedSlicers," ",collapse=","),","), 
           "distance"
      )
-     
+          
      if(Verbose) cat("Used SQL: \n", AggregationSQL,"\n")
      
      sqldf(AggregationSQL, drv='SQLite')
