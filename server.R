@@ -10,18 +10,16 @@ shinyServer(function(input, output, session){
           var.opts<-namel(colnames(obj))
           var.opts.original.slicers <- namel(colnames(VintageData))
 
-          var.opts.slicers <- var.opts[!(var.opts %in% c("vintage_unit_weight","vintage_unit_count",
-                                                         "event_weight","event_weight_pct","event_weight_csum",
-                                                         "event_weight_csum_pct","rn"))]
-          var.opts.original.slicers <- var.opts[!(var.opts %in% c("vintage_unit_weight","vintage_unit_count",
-                                                         "event_weight","event_weight_pct","event_weight_csum",
-                                                         "event_weight_csum_pct","rn"))]
-          var.opts.measures <- var.opts[var.opts %in% c("vintage_unit_weight","vintage_unit_count",
-                                                           "event_weight","event_weight_pct","event_weight_csum",
-                                                           "event_weight_csum_pct")]
+          non.slicers <- c("vintage_unit_weight","vintage_unit_count","event_weight","event_weight_pct","event_weight_csum",
+                           "event_weight_csum_pct","rn")
+          
+          var.opts.slicers <- var.opts[!(var.opts %in% non.slicers)]
+          var.opts.original.slicers <- var.opts.original.slicers[!(var.opts.original.slicers %in% non.slicers)]
+          var.opts.measures <- var.opts[var.opts %in% non.slicers]
+          
           var.none <- 'None'
           names(var.none) <- 'None'
-          updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers)
+          updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers))
