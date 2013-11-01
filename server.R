@@ -4,6 +4,7 @@ shinyServer(function(input, output, session){
      observe({
 
           require(pgvint)
+          require(sqldf)
           cat(input$source_slicers)
           if (is.null(input$source_slicers)) {
                obj <- VintageData
