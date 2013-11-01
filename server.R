@@ -3,6 +3,7 @@ shinyServer(function(input, output, session){
      #update variable and group based on dataset
      observe({
           #obj<-VintageData
+          require(sqldf)
           obj<-AggregateVintageData(VintageData,Slicers="product")
           #obj<-switch(input$dataset, "VintageData" = VintageData)
           var.opts<-namel(colnames(obj))
