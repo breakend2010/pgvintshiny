@@ -9,7 +9,9 @@ shinyServer(function(input, output, session){
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
-          updateSelectInput(session, "group", choices = var.opts)          
+          updateSelectInput(session, "group", choices = var.opts)
+          updateSelectInput(session, "left_facets", choices = var.opts)          
+          updateSelectInput(session, "right_facets", choices = var.opts)
           
      })
      
