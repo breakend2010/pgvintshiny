@@ -55,16 +55,17 @@ shinyServer(function(input, output, session){
           require(ggplot2)
           obj <- AggregateVintageData(VintageData,Slicers=input$source_slicers)
      
-          if (length(input$right_facets) == 0 & lenght(input$left_facets) != 0)) {
-               frm_text <- as.formula(paste0('~',paste0(input$left_facets,collapse="+")))
-          } else if (length(input$right_facet) != 0 & length(input$left_facets) ==0) {
-               frm_text <- as.formula(paste0('~',paste0(input$right_facets,collapse="+"))))
-          } else if (length(input$right_facet) != 0 & length(input$left_facets) !=0) {
-               frm_text <- as.formula(paste0(paste0(input$left_facets,collapse="+")'~',paste0(input$right_facets,collapse="+"))))
+          if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
+               frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
+          } else if (length(input$right_facets) != 0 & length(input$left_facets) ==0) {
+               frm_text <- paste0('~',paste0(input$right_facets,collapse="+"))
+          } else if (length(input$right_facets) != 0 & length(input$left_facets) !=0) {
+               frm_text <- paste0(paste0(input$left_facets,collapse="+"),'~',paste0(input$right_facets,collapse="+"))
           } else {
                frm_text <- NULL
           }
-
+          cat(as.character(frm_text))
+          
           if (input$group == 'None') {
                p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis, facets=frm_text)     
           } else {

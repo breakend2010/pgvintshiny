@@ -1,6 +1,6 @@
 shinyUI(pageWithSidebar(
      # title
-     headerPanel("Select Options"),
+     headerPanel("Analysis setup"),
      
      #input
      sidebarPanel
