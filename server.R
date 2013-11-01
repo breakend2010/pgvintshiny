@@ -25,7 +25,7 @@ shinyServer(function(input, output, session){
           var.opts.left.slicers <- NA
           var.opts.right.slicers <- NA          
           
-          if (length(input$source_slicers) == 2 {
+          if (length(input$source_slicers) == 2) {
                var.opts.left.slicers <- input$source_slicers[2]
           } else if (length(input$source_slicers) == 3) {
                var.opts.left.slicers <- input$source_slicers[2]
@@ -52,13 +52,23 @@ shinyServer(function(input, output, session){
      
      #plotting function using ggplot2
      output$p <- renderPlot({
-          
           require(ggplot2)
           obj <- AggregateVintageData(VintageData,Slicers=input$source_slicers)
-          if (input$group == 'None') {
-               p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis)     
+     
+          if (length(input$right_facets) == 0 & lenght(input$left_facets) != 0)) {
+               frm_text <- as.formula(paste0('~',paste0(input$left_facets,collapse="+")))
+          } else if (length(input$right_facet) != 0 & length(input$left_facets) ==0) {
+               frm_text <- as.formula(paste0('~',paste0(input$right_facets,collapse="+"))))
+          } else if (length(input$right_facet) != 0 & length(input$left_facets) !=0) {
+               frm_text <- as.formula(paste0(paste0(input$left_facets,collapse="+")'~',paste0(input$right_facets,collapse="+"))))
           } else {
-               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group)
+               frm_text <- NULL
+          }
+
+          if (input$group == 'None') {
+               p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis, facets=frm_text)     
+          } else {
+               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group, facets=frm_text)
           }
           
           print(p)
