@@ -2,8 +2,10 @@
 shinyServer(function(input, output, session){
      #update variable and group based on dataset
      observe({
-          obj<- VintageData #switch(input$dataset, "VintageData" = VintageData)
+          #obj<-VintageData
+          obj<-AggregateVintageData(VintageData,Slicers=input$group)
           var.opts<-namel(colnames(obj))
+          
           names(var.opts)[names(var.opts) %in% c("vintage_unit_weight","vintage_unit_count",
                                                   "event_weight","event_weight_pct","event_weight_csum",
                                                   "event_weight_csum_pct","rn")] <- c ('Vintage unit weight', 'Vintage unit count',
