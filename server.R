@@ -42,7 +42,7 @@ shinyServer(function(input, output, session){
           
           require(ggplot2)
           if (input$group == 'None') {
-               p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis)     
+               p <- PlotVintageData(AggregateVintageData(VintageData,Slicers=input$source_slicers),x=input$xaxis, y=input$yaxis)     
           } else {
                p <- PlotVintageData(VintageData,x=input$xaxis,y=input$yaxis,cond=input$group)     
           }
