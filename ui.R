@@ -5,6 +5,7 @@ shinyUI(pageWithSidebar(
      #input
      sidebarPanel
      (
+          selectInput("source_slicers","Source Slicers:", "Loading..."),
           selectInput("xaxis","X Axis:", "Loading..."),
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
