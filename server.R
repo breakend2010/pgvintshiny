@@ -5,7 +5,7 @@ shinyServer(function(input, output, session){
 
           require(pgvint)
           cat(input$source_)
-          obj<-AggregateVintageData(VintageData,Slicers=switch(input$source_slicers,c(namel(colnames(VintageData))))
+          obj<-AggregateVintageData(VintageData,Slicers=switch(input$source_slicers,c(namel(colnames(VintageData)))))
 
           var.opts<-namel(colnames(obj))
           var.opts.original.slicers <- namel(colnames(VintageData))
