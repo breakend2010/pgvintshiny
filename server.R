@@ -23,7 +23,7 @@ shinyServer(function(input, output, session){
      output$p <- renderPlot({
           
           require(ggplot2)
-          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets=input$facets)
+          p <- PlotVintageData(VintageData,x=input$xaxis, y=input$yaxis, cond=input$group,facets='~region')
           print(p)
      })	
 })
