@@ -2,7 +2,7 @@
 shinyServer(function(input, output, session){
      #update variable and group based on dataset
      observe({
-          #obj<-VintageData
+
           require(pgvint)
           cat(input$source_)
           obj<-AggregateVintageData(VintageData,Slicers=c("product"))
@@ -10,11 +10,11 @@ shinyServer(function(input, output, session){
           var.opts<-namel(colnames(obj))
           var.opts.original.slicers <- namel(colnames(VintageData))
 
-          non.slicers <- c("vintage_unit_weight","vintage_unit_count","event_weight","event_weight_pct","event_weight_csum",
-                           "event_weight_csum_pct","rn")
+          non.slicers <- c("vintage_unit_weight","vintage_unit_count","event_weight",
+                           "event_weight_pct","event_weight_csum","event_weight_csum_pct","rn")
           
           var.opts.slicers <- var.opts[!(var.opts %in% non.slicers)]
-          var.opts.original.slicers <- var.opts.original.slicers[!(var.opts.original.slicers %in% non.slicers)]
+          var.opts.original.slicers <- var.opts.original.slicers[!(var.opts.original.slicers %in% c(non.slicers,'distance'))]
           var.opts.measures <- var.opts[var.opts %in% non.slicers]
           
           var.none <- 'None'
