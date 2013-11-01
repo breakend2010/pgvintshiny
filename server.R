@@ -5,7 +5,7 @@ shinyServer(function(input, output, session){
           #if (is.null(input$dataset))
           #     return()
 
-          obj<-switch(input$dataset, "VintageData" = VintageData)
+          obj<- VintageData #switch(input$dataset, "VintageData" = VintageData)
           var.opts<-namel(colnames(obj))
           updateSelectInput(session, "xaxis", choices = var.opts)
           updateSelectInput(session, "yaxis", choices = var.opts)
