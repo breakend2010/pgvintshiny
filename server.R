@@ -22,14 +22,27 @@ shinyServer(function(input, output, session){
           var.opts.original.slicers <- var.opts.original.slicers[!(var.opts.original.slicers %in% c(non.slicers,'distance'))]
           var.opts.measures <- var.opts[var.opts %in% non.slicers]
           
+          var.opts.left.slicers <- NA
+          var.opts.right.slicers <- NA          
+          
+          if (length(input$source_slicers) == 2 {
+               var.opts.left.slicers <- input$source_slicers[2]
+          } else if (length(input$source_slicers) == 3) {
+               var.opts.left.slicers <- input$source_slicers[2]
+               var.opts.right.slicers <- input$source_slicers[3]               
+          } else if (length(input$source_slicers) > 3) {
+               var.opts.left.slicers <- input$source_slicers[2:3]
+               var.opts.right.slicers <- input$source_slicers[4:length(input$source_slicers)]
+          }
+          
           var.none <- 'None'
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
-          updateSelectInput(session, "left_facets", choices = var.opts.slicers)          
-          updateSelectInput(session, "right_facets", choices = var.opts.slicers)
+          updateSelectInput(session, "left_facets", choices = var.opts.slicers, selected = var.opts.left.slicers)          
+          updateSelectInput(session, "right_facets", choices = var.opts.slicers, selected = var.opts.right.slicers)
           
      })
      
@@ -45,7 +58,7 @@ shinyServer(function(input, output, session){
           if (input$group == 'None') {
                p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis)     
           } else {
-               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group)     
+               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group)
           }
           
           print(p)
