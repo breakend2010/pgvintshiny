@@ -13,6 +13,8 @@ this work, you need to have a data frame named `VintageData` in your workspace. 
 defined in `pgvint` documentation.
 
 ### Demo
+!Caution: This will create data frame named VintageDataTmp in your global environment. Check that no binding is currently used for VintageDataTmp as the demo will overwrite object with this name.
+
 If you would like to see the application with sample data, you can use:
 
     library(devtools)
