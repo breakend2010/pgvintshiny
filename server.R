@@ -7,7 +7,8 @@ shinyServer(function(input, output, session){
           require(sqldf)
 
           if (is.null(input$source_slicers)) {
-               VintageDataTmp <<- VintageData
+               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA)     
+               #VintageDataTmp <<- VintageData
           } else {
                VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
           }
