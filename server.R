@@ -7,12 +7,12 @@ shinyServer(function(input, output, session){
           require(sqldf)
 
           if (is.null(input$source_slicers)) {
-               obj <- VintageData
+               VintageDataTmp <<- VintageData
           } else {
-               obj<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
+               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
           }
           
-          var.opts<-namel(colnames(obj))
+          var.opts<-namel(colnames(VintageDataTmp))
           var.opts.original.slicers <- namel(colnames(VintageData))
 
           non.slicers <- c("vintage_unit_weight","vintage_unit_count","event_weight",
@@ -53,7 +53,6 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           require(ggplot2)
-          obj <- AggregateVintageData(VintageData,Slicers=input$source_slicers)
      
           if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
                frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
@@ -64,12 +63,11 @@ shinyServer(function(input, output, session){
           } else {
                frm_text <- NULL
           }
-          cat(as.character(frm_text))
           
           if (input$group == 'None') {
-               p <- PlotVintageData(obj,x=input$xaxis, y=input$yaxis, facets=frm_text)     
+               p <- PlotVintageData(VintageDataTmp,x=input$xaxis, y=input$yaxis, facets=frm_text)     
           } else {
-               p <- PlotVintageData(obj,x=input$xaxis,y=input$yaxis,cond=input$group, facets=frm_text)
+               p <- PlotVintageData(VintageDataTmp,x=input$xaxis,y=input$yaxis,cond=input$group, facets=frm_text)
           }
           
           print(p)
