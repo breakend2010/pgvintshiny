@@ -6,6 +6,7 @@ shinyUI(pageWithSidebar(
      sidebarPanel
      (
           selectInput("source_slicers","Source Slicers:", "Loading...",multiple=TRUE),
+          selectInput("time_agg_unit","Time Aggregation:", "Loading..."),
           selectInput("xaxis","X Axis:", "Loading..."),
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
@@ -16,6 +17,6 @@ shinyUI(pageWithSidebar(
      # output				
      mainPanel(
           h3('Vintage Analysis'),
-          uiOutput("plot") # depends on input 
+          uiOutput("plot")
      )
 ))

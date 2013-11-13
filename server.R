@@ -6,11 +6,23 @@ shinyServer(function(input, output, session){
           require(pgvint)
           require(sqldf)
 
-          if (is.null(input$source_slicers)) {
-               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA)     
-               #VintageDataTmp <<- VintageData
+          if (input$time_agg_unit == 'Loading...') {
+               time_agg_unit <- 1
           } else {
-               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
+               time_agg_unit <- input$time_agg_unit
+          }
+          
+          cat(time_agg_unit)
+
+          if (is.null(input$source_slicers)) {
+
+               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA
+                                                       ,TimeAggregationUnit=time_agg_unit
+                                                       )     
+          } else {
+               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers
+                                                     ,TimeAggregationUnit=time_agg_unit
+                                                     )     
           }
           
           var.opts<-namel(colnames(VintageDataTmp))
@@ -35,10 +47,11 @@ shinyServer(function(input, output, session){
                var.opts.left.slicers <- input$source_slicers[2:3]
                var.opts.right.slicers <- input$source_slicers[4:length(input$source_slicers)]
           }
-          
+                    
           var.none <- 'None'
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
+          updateSelectInput(session, "time_agg_unit", choices = namel(1:10), selected=input$time_agg_unit)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
@@ -64,6 +77,8 @@ shinyServer(function(input, output, session){
           } else {
                frm_text <- NULL
           }
+          cat(paste(unique(c(input$right_facets, input$left_facets,input$group, input$xaxis),collapse=',')),'\n')
+          
           
           if (input$group == 'None') {
                p <- PlotVintageData(VintageDataTmp,x=input$xaxis, y=input$yaxis, facets=frm_text)     
