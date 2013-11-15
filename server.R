@@ -10,9 +10,7 @@ shinyServer(function(input, output, session){
                time_agg_unit <- 1
           } else {
                time_agg_unit <- input$time_agg_unit
-          }
-          
-          cat(time_agg_unit)
+          }     
 
           if (is.null(input$source_slicers)) {
 
@@ -51,7 +49,7 @@ shinyServer(function(input, output, session){
           var.none <- 'None'
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
-          updateSelectInput(session, "time_agg_unit", choices = namel(1:10), selected=input$time_agg_unit)
+          updateSelectInput(session, "time_agg_unit", choices = namel(1:12), selected=input$time_agg_unit)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
@@ -60,14 +58,23 @@ shinyServer(function(input, output, session){
           
      })
      
-     output$plot <- renderUI({
-          plotOutput("p")
+     output$all <- renderUI({
+
+          list(plotOutput("p"),tableOutput("t"))
+
      })
+     
+          
+     output$t <- renderTable({
+          tmp <- c (input$source_slicers, input$time_agg_unit)
+          t <- PrintVintageData(VintageDataTmp)[[6]]
+          t
+          })
      
      #plotting function using ggplot2
      output$p <- renderPlot({
           require(ggplot2)
-     
+          tmp <- input$time_agg_unit
           if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
                frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
           } else if (length(input$right_facets) != 0 & length(input$left_facets) ==0) {
@@ -77,7 +84,6 @@ shinyServer(function(input, output, session){
           } else {
                frm_text <- NULL
           }
-          cat(paste(unique(c(input$right_facets, input$left_facets,input$group, input$xaxis),collapse=',')),'\n')
           
           
           if (input$group == 'None') {

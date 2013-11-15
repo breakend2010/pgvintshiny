@@ -17,6 +17,6 @@ shinyUI(pageWithSidebar(
      # output				
      mainPanel(
           h3('Vintage Analysis'),
-          uiOutput("plot")
+          uiOutput("all")
      )
 ))
