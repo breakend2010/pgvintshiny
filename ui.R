@@ -16,8 +16,11 @@ shinyUI(pageWithSidebar(
      
      # output				
      mainPanel(
-          h3('Vintage Analysis'),
+          h3('Vintage Plot'),
           downloadLink('d', 'Download vintage data'),
-          uiOutput("all")
+          uiOutput("plot"),
+          h3('Vintage Data'),
+          uiOutput("table")          
+
      )
 ))

@@ -56,11 +56,13 @@ shinyServer(function(input, output, session){
      })
      
 
-     output$all <- renderUI({
-
-          list(plotOutput("p"),dataTableOutput("t"))
-
-     })
+#      output$all <- renderUI({
+# 
+#           list(plotOutput("p"),dataTableOutput("t"))
+# 
+#      })
+     output$plot <-  renderUI({plotOutput("p")})
+     output$table <-  renderUI({dataTableOutput("t")})
      
      #table function
      output$t <- renderDataTable({
