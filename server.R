@@ -5,22 +5,19 @@ shinyServer(function(input, output, session){
 
           require(pgvint)
           require(sqldf)
-
-          if (input$time_agg_unit == 'Loading...') {
-               time_agg_unit <- 1
-          } else {
-               time_agg_unit <- input$time_agg_unit
-          }     
+          require(WriteXLS)
 
           if (is.null(input$source_slicers)) {
 
-               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA
-                                                       ,TimeAggregationUnit=time_agg_unit
-                                                       )     
+               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA)     
           } else {
-               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers
-                                                     ,TimeAggregationUnit=time_agg_unit
-                                                     )     
+               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
+          }
+          
+          mdist <- max(VintageDataTmp$distance)
+          
+          if (input$vintage_filter != 1) {
+               VintageDataTmp <<- VintageDataTmp[VintageDataTmp$distance %in% seq(input$vintage_filter - 1 , mdist, input$vintage_filter), ]
           }
           
           var.opts<-namel(colnames(VintageDataTmp))
@@ -49,7 +46,7 @@ shinyServer(function(input, output, session){
           var.none <- 'None'
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
-          updateSelectInput(session, "time_agg_unit", choices = namel(1:12), selected=input$time_agg_unit)
+          updateSliderInput(session, "vintage_filter", value=input$vintage_filter)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
@@ -64,17 +61,28 @@ shinyServer(function(input, output, session){
 
      })
      
-          
+     #table function
      output$t <- renderTable({
-          tmp <- c (input$source_slicers, input$time_agg_unit)
-          t <- PrintVintageData(VintageDataTmp)[[6]]
+          tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter)
+          t <- PrintVintageData(VintageDataTmp,Digits=2)[[6]]
           t
           })
+
+     output$d <- downloadHandler( 
+          filename = function() {
+               paste('data-', Sys.Date(), '.xls', sep='')
+          },
+          content = function(file) {          
+               tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter)
+               PrintVintageData(VintageDataTmp,Result='xls',File=file)
+          },
+          'application/vnd.ms-excel'
+     )
      
      #plotting function using ggplot2
      output$p <- renderPlot({
           require(ggplot2)
-          tmp <- input$time_agg_unit
+          tmp <- c(input$time_agg_unit, input$vintage_filter)
           if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
                frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
           } else if (length(input$right_facets) != 0 & length(input$left_facets) ==0) {

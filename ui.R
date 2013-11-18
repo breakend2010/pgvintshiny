@@ -6,7 +6,7 @@ shinyUI(pageWithSidebar(
      sidebarPanel
      (
           selectInput("source_slicers","Source Slicers:", "Loading...",multiple=TRUE),
-          selectInput("time_agg_unit","Time Aggregation:", "Loading..."),
+          sliderInput("vintage_filter","Display each Nth distance:",min=1,max=12,step=1,value=1),          
           selectInput("xaxis","X Axis:", "Loading..."),
           selectInput("yaxis","Y Axis:", "Loading..."),
           selectInput("group","Group:" , "Loading..."),
@@ -17,6 +17,7 @@ shinyUI(pageWithSidebar(
      # output				
      mainPanel(
           h3('Vintage Analysis'),
+          downloadLink('d', 'Download vintage data'),
           uiOutput("all")
      )
 ))
