@@ -5,12 +5,18 @@
 * R version 3.02 or higher
 * PostgreSQL version 9.1 or higher
 * ggplot2, sqldf, RPostgreSQL, devtools, XLSWrite, reshape2
-* pgvint, shiny
+* pgvint, shiny (>0.8, currently not in CRAN!)
 
 ## How to start
 `pgvintshiny` can work with outputs from functions `GetVintageData` and `AggregateVintageData` in `pgvint` package. To make
 this work, you need to have a data frame named `VintageData` in your workspace. This data frame needs to have fixed structure as
 defined in `pgvint` documentation.
+
+To install development version of `shiny` use:
+
+     if (!require("devtools"))
+       install.packages("devtools")
+     devtools::install_github("shiny", "rstudio")
 
 ### Demo
 !Caution: This will create data frame named VintageDataTmp in your global environment. Check that no binding is currently used for VintageDataTmp as the demo will overwrite object with this name.
