@@ -58,12 +58,12 @@ shinyServer(function(input, output, session){
 
      output$all <- renderUI({
 
-          list(plotOutput("p"),tableOutput("t"))
+          list(plotOutput("p"),dataTableOutput("t"))
 
      })
      
      #table function
-     output$t <- renderTable({
+     output$t <- renderDataTable({
           tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter)
           t <- PrintVintageData(VintageDataTmp,Digits=2)[[6]]
           t
