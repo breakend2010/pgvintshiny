@@ -19,7 +19,7 @@ shinyServer(function(input, output, session){
           if (input$vintage_filter != 1) {
                VintageDataTmp <<- VintageDataTmp[VintageDataTmp$distance %in% seq(input$vintage_filter - 1 , mdist, input$vintage_filter), ]
           }
-          
+               
           var.opts<-namel(colnames(VintageDataTmp))
           var.opts.original.slicers <- namel(colnames(VintageData))
 
@@ -55,6 +55,7 @@ shinyServer(function(input, output, session){
           
      })
      
+
      output$all <- renderUI({
 
           list(plotOutput("p"),tableOutput("t"))

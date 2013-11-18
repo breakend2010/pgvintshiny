@@ -1,7 +1,7 @@
 #initialize
-library(datasets)
 library(ggplot2) 
-#VintageData <- VintageData
+library(pgvint)
+
 #helper function (convert vector to named list)
 namel<-function (vec){
      tmp<-as.list(vec)
