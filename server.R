@@ -7,19 +7,45 @@ shinyServer(function(input, output, session){
           require(sqldf)
           require(WriteXLS)
 
-          if (is.null(input$source_slicers)) {
-
-               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA)     
+          if (nchar(input$sql_filter) > 0) {
+               if(strsplit(input$sql_filter,'')[[1]][nchar(input$sql_filter)] == ';') {
+                    sql <- input$sql_filter
+                    sql <- strsplit(sql,'')[[1]]                    
+                    sql <- paste(sql[1:length(sql)-1], collapse='')
+                    testsql <- function(sql) {
+                              outsql <- tryCatch(
+                                             {
+                                                 x <- sqldf(paste("select * from VintageData where ", sql, "limit 1;"),drv='SQLite')
+                                                 message(paste("Valid SQL:", sql))
+                                                 outsql <- sql
+                                             },
+                                             error=function(cond) {
+                                                  message(paste("Invalid SQL:", sql))
+                                                  outsql <- '1=1'
+                                                       }
+                                                  )    
+                                                  return(outsql) }
+                    sql <- testsql(sql)
+                    } else {
+                    sql <- "1=1"
+               }
           } else {
-               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers)     
+               sql <- "1=1"               
           }
           
+          if (is.null(input$source_slicers)) {
+               VintageDataTmp <<- AggregateVintageData(VintageData,Slicers=NA,SQLModifier=sql)
+          } else {
+               VintageDataTmp<<-AggregateVintageData(VintageData,Slicers=input$source_slicers,SQLModifier=sql)     
+          }
+  
           mdist <- max(VintageDataTmp$distance)
           
           if (input$vintage_filter != 1) {
                VintageDataTmp <<- VintageDataTmp[VintageDataTmp$distance %in% seq(input$vintage_filter - 1 , mdist, input$vintage_filter), ]
           }
-               
+
+          
           var.opts<-namel(colnames(VintageDataTmp))
           var.opts.original.slicers <- namel(colnames(VintageData))
 
@@ -52,7 +78,6 @@ shinyServer(function(input, output, session){
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
           updateSelectInput(session, "left_facets", choices = var.opts.slicers, selected = var.opts.left.slicers)          
           updateSelectInput(session, "right_facets", choices = var.opts.slicers, selected = var.opts.right.slicers)
-          
      })
      
 
@@ -64,7 +89,7 @@ shinyServer(function(input, output, session){
      
      #table function
      output$t <- renderDataTable({
-          tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter)
+          tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change)
           t <- PrintVintageData(VintageDataTmp,Digits=2)[[6]]
           t
           })
@@ -74,7 +99,7 @@ shinyServer(function(input, output, session){
                paste('data-', Sys.Date(), '.xls', sep='')
           },
           content = function(file) {          
-               tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter)
+               tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change)
                PrintVintageData(VintageDataTmp,Result='xls',File=file)
           },
           'application/vnd.ms-excel'
@@ -83,7 +108,7 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           require(ggplot2)
-          tmp <- c(input$time_agg_unit, input$vintage_filter)
+          tmp <- c(input$time_agg_unit, input$vintage_filter, input$change)
           if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
                frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
           } else if (length(input$right_facets) != 0 & length(input$left_facets) ==0) {
