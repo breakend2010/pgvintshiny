@@ -45,6 +45,9 @@ shinyServer(function(input, output, session){
                VintageDataTmp <<- VintageDataTmp[VintageDataTmp$distance %in% seq(input$vintage_filter - 1 , mdist, input$vintage_filter), ]
           }
 
+          if (input$low_count_exclusion != 1) {
+               VintageDataTmp <<- VintageDataTmp[VintageDataTmp$vintage_unit_count > input$low_count_exclusion, ]
+          }          
           
           var.opts<-namel(colnames(VintageDataTmp))
           var.opts.original.slicers <- namel(colnames(VintageData))
@@ -73,6 +76,7 @@ shinyServer(function(input, output, session){
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
           updateSliderInput(session, "vintage_filter", value=input$vintage_filter)
+          updateSliderInput(session, "low_count_exclusion", value=input$low_count_exclusion)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
@@ -89,7 +93,7 @@ shinyServer(function(input, output, session){
      
      #table function
      output$t <- renderDataTable({
-          tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change)
+          tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change, input$low_count_exclusion)
           t <- PrintVintageData(VintageDataTmp,Digits=2)[[6]]
           t
           })
@@ -99,7 +103,7 @@ shinyServer(function(input, output, session){
                paste('data-', Sys.Date(), '.xls', sep='')
           },
           content = function(file) {          
-               tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change)
+               tmp <- c (input$source_slicers, input$time_agg_unit, input$vintage_filter, input$change, input$low_count_exclusion)
                PrintVintageData(VintageDataTmp,Result='xls',File=file)
           },
           'application/vnd.ms-excel'
@@ -108,7 +112,7 @@ shinyServer(function(input, output, session){
      #plotting function using ggplot2
      output$p <- renderPlot({
           require(ggplot2)
-          tmp <- c(input$time_agg_unit, input$vintage_filter, input$change)
+          tmp <- c(input$time_agg_unit, input$vintage_filter, input$change, input$low_count_exclusion)
           if (length(input$right_facets) == 0 & length(input$left_facets) != 0) {
                frm_text <- paste0('~',paste0(input$left_facets,collapse="+"))
           } else if (length(input$right_facets) != 0 & length(input$left_facets) ==0) {
