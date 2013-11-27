@@ -76,7 +76,7 @@ shinyServer(function(input, output, session){
           names(var.none) <- 'None'
           updateSelectInput(session, "source_slicers", choices = var.opts.original.slicers, selected=var.opts.slicers)
           updateSliderInput(session, "vintage_filter", value=input$vintage_filter)
-          updateSliderInput(session, "low_count_exclusion", value=input$low_count_exclusion)
+          # updateSliderInput(session, "low_count_exclusion", value=input$low_count_exclusion)
           updateSelectInput(session, "xaxis", choices = var.opts,selected="distance")
           updateSelectInput(session, "yaxis", choices = var.opts.measures,selected="event_weight_csum_pct")
           updateSelectInput(session, "group", choices = c(var.none,var.opts.slicers),selected=input$source_slicers[1])
